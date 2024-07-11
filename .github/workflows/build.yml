@@ -1,0 +1,48 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  schedule:
+     - cron:  '30 14 * * * '
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/checkout@v4
+      with:
+        repository: lnxiang/test-action
+        path: test-action
+    - uses: actions/checkout@v4   
+      with:
+        repository: lnxiang/add-function
+        path: add-function
+    - name: install cmake
+      uses: symbitic/install-cmake@master
+    - name: get time
+      id: date
+      run: |
+        echo "time=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+    - name: Build project
+      run: |
+        export RDB_VERSION=$time.${{github.run_number}} 
+        cd ${{ github.workspace }}/test-action
+        ./build.sh -r -p
+        cd ${{ github.workspace }}/add-function
+        ./build.sh -r -p
+      shell: bash
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: my-artifact
+        path: |
+          ${{ github.workspace }}/test-action/dist/**.deb
+          ${{ github.workspace }}/add-function/dist/**.deb
+        retention-days: 5
+      
