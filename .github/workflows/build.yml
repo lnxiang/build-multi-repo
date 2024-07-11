@@ -19,10 +19,12 @@ jobs:
       with:
         repository: lnxiang/test-action
         path: test-action
+        ref: main
     - uses: actions/checkout@v4   
       with:
         repository: lnxiang/add-function
         path: add-function
+        ref: main
     - name: install cmake
       uses: symbitic/install-cmake@master
     - name: get time
