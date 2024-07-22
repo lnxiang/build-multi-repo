@@ -15,12 +15,19 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-
     - uses: actions/checkout@v4   
       with:
         repository: lnxiang/add-function
         ref: main
         path: add-function
+        
+    - uses: actions/checkout@v4
+      with:
+        repository: lnxiang/test-action
+        ref: main
+        token: ${{ secrets.ACCESS_TOKEN }}
+        path: test-action
+        
     - name: install cmake
       uses: symbitic/install-cmake@master
     - name: get time
