@@ -1,6 +1,11 @@
 name: C/C++ CI
 
 on:
+  workflow_call:
+    secrets:
+      ACCESS_TOKEN:
+        description: 'A token passed from the caller workflow'
+        required: false
   push:
     branches: [ "main" ]
   pull_request:
