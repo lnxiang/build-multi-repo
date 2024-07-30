@@ -2,7 +2,7 @@ name: C/C++ CI
 
 on:
   repository_dispatch:
-  types: [dispatch-event]  
+    types: [dispatch-event]  
   workflow_dispatch:
   workflow_call:
     secrets:
